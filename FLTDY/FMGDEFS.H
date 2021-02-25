@@ -209,7 +209,18 @@ typedef struct {
 	float phi;
 	float theta;
 	float psi;
-} XPythonPlugin; //SIMULINK
+} XPythonPlugin; //XPython Plugin
+
+typedef struct {
+    char header[5];
+	float pad;
+	double latitude;
+	double longitude;
+	double elev;
+	float psi;
+	float theta;
+	float phi;
+} xplaneDREF;
 
 
 typedef struct {

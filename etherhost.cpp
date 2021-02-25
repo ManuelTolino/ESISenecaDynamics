@@ -82,6 +82,7 @@ extern FGProtocol FGOutput;  //FGPROTOCOL
 extern SIMULINKdouble simulinkdoubledata;  //SIMULINK
 extern SIMULINKfloat SIMULINKfloatdata;  //SIMULINK
 extern XPythonPlugin XPython; //XPLANE 11 Plugin XPython
+extern xplaneDREF xplanevehx; //XPLANE 11 comunicacionDirecta port 49000
 
 extern sen_in_struct *IO_Sen_in;
 extern sen_qtg_struct *IO_Sen_qtg;
@@ -968,7 +969,7 @@ int ET_init_SIMULINKscr()  //A�ADIDO POR MANOLO_12_04
 	}
 
 	SENDERR_Dest2.sin_family = PF_INET;
-	SENDERR_Dest2.sin_port = htons( (int)19600 );
+	SENDERR_Dest2.sin_port = htons( (int)49000 );
 	bcopy(host_ptr->h_addr, &SENDERR_Dest2.sin_addr, host_ptr->h_length);
 
 	if (connect(SENDER_Socket_desc2, (struct sockaddr *) &SENDERR_Dest2, sizeof(SENDERR_Dest2)) == -1)
@@ -1002,7 +1003,7 @@ void ET_ex_SIMULINKscr()  //A�ADIDO POR MANOLO_12_04
    /*bytes_sent = send(SENDER_Socket_desc, (const char *) &sendtest,sizeof(sendtest), 0);*/
    /*sendtest = sendtest + 1;*/  // Contador para pruebas
 
-   bytes_sent = send(SENDER_Socket_desc2, (const char *) &SIMULINKfloatdata,sizeof(SIMULINKfloat), 0);
+   bytes_sent = send(SENDER_Socket_desc2, (const char *) &xplanevehx,sizeof(xplaneDREF), 0);
 
 
    /*
@@ -1034,7 +1035,7 @@ int ET_init_SIMULINKhdw()  //A�ADIDO POR MANOLO_12_04
 	}
 
 	SENDERR_Dest3.sin_family = PF_INET;
-	SENDERR_Dest3.sin_port = htons( (int)19700 );
+	SENDERR_Dest3.sin_port = htons( (int)19777 );
 	bcopy(host_ptr->h_addr, &SENDERR_Dest3.sin_addr, host_ptr->h_length);
 
 	if (connect(SENDER_Socket_desc3, (struct sockaddr *) &SENDERR_Dest3, sizeof(SENDERR_Dest3)) == -1)

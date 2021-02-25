@@ -199,6 +199,7 @@ STATES states;
 SIMULINKdouble simulinkdoubledata;
 SIMULINKfloat SIMULINKfloatdata;
 XPythonPlugin XPython;
+xplaneDREF xplanevehx;
 StartData DY_start;
 AtmosphericsData DY_atmos;
 WeightData DY_weight;
@@ -689,6 +690,23 @@ last4dn = IO_Sen_in->test_switch_4_dn;
    XPython.phi = outputs.phi * R2D;
    XPython.theta = outputs.theta * R2D;
    XPython.psi = outputs.psi * R2D;
+
+   //XPLANE COMM DIRECTA A 49000
+   memset(&xplanevehx, 0, sizeof(xplanevehx));
+   //strncpy(&xplanevehx.header, "VEHX", 4);
+     xplanevehx.header[0] = char("V");
+	   xplanevehx.header[1] = char("E");
+	     xplanevehx.header[2] = char("H");
+		   xplanevehx.header[3] = char("X");
+   xplanevehx.header[4] = 0;
+   xplanevehx.pad = 0;
+   xplanevehx.latitude = states.latitude * R2D;
+   xplanevehx.longitude = states.longitude * R2D;
+   xplanevehx.elev = -states.D; //Altitud
+   xplanevehx.phi = outputs.phi * R2D;
+   xplanevehx.theta = outputs.theta * R2D;
+   xplanevehx.psi = outputs.psi * R2D;
+   
 
 	//OUTPUT
 	SIMULINKfloatdata.phi=outputs.phi;
