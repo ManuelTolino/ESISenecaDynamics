@@ -198,6 +198,7 @@ ATMOS atmosphere;
 STATES states;
 SIMULINKdouble simulinkdoubledata;
 SIMULINKfloat SIMULINKfloatdata;
+XPythonPlugin XPython;
 StartData DY_start;
 AtmosphericsData DY_atmos;
 WeightData DY_weight;
@@ -681,6 +682,14 @@ last4dn = IO_Sen_in->test_switch_4_dn;
 	simulinkdoubledata.E=states.E; //simulink
 	simulinkdoubledata.D=states.D; //simulink
 
+   //XPLANE11-XPYTHON
+   XPython.latitude = states.latitude * R2D;
+   XPython.longitude = states.longitude * R2D;
+   XPython.elev = -states.D; //Altitud
+   XPython.phi = outputs.phi * R2D;
+   XPython.theta = outputs.theta * R2D;
+   XPython.psi = outputs.psi * R2D;
+
 	//OUTPUT
 	SIMULINKfloatdata.phi=outputs.phi;
 	SIMULINKfloatdata.theta=outputs.theta;
@@ -732,8 +741,6 @@ last4dn = IO_Sen_in->test_switch_4_dn;
 void DY_trim_flight(void)
 {
    float dt = 0.01f;
-   
-
    outputs.user[Y_A_TRIM_COST] = 100;
    int freeze = (FREEZE_NED + FREEZE_LATLON);
    int innerct = 0;

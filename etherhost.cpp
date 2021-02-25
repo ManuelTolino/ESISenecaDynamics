@@ -6,23 +6,6 @@ Module: Dynamics for Seneca
 
 Description: This file contains ethernet function calls
              for the host computer
-*/
-
-/***************************/
-/*   RCS Markers           */
-/***************************/
-
-/*
-
-3_12_08 AÑADIDO SCREENS
-$Header: C:/MASTER/seneca/RCS/etherhost.cpp 1.1 2000/04/14 16:52:18 colinj Exp $
-$Log: etherhost.cpp $
-Revision 1.1  2000/04/14 16:52:18  colinj
-Initial revision
-
-*/
-
-/*----------------------------------------------------------------------*/
 
 /*----------------*/
 /* Include Files  */
@@ -40,7 +23,7 @@ Initial revision
 #include "dat_stru\in_head.h"
 #include "dat_stru\out_head.h"
 
-#include "FLTDY\Fmgdefs.h" //AÑADIDO 1/04
+#include "FLTDY\Fmgdefs.h" //Aï¿½ADIDO 1/04
 
 #include "config.h"
 #include "nav\dyn_ios.h"
@@ -98,6 +81,7 @@ extern OUTPUTS outputs;
 extern FGProtocol FGOutput;  //FGPROTOCOL
 extern SIMULINKdouble simulinkdoubledata;  //SIMULINK
 extern SIMULINKfloat SIMULINKfloatdata;  //SIMULINK
+extern XPythonPlugin XPython; //XPLANE 11 Plugin XPython
 
 extern sen_in_struct *IO_Sen_in;
 extern sen_qtg_struct *IO_Sen_qtg;
@@ -131,7 +115,7 @@ sen_qtg_struct recv_sen_qtg;
 //OUTPUTin BUFFERinbox; //bufferlocal
 
 /*
-int sendtest=5;         //==========================VALOR DE PRUEBA  //AÑADIDO POR MANOLO
+int sendtest=5;         //==========================VALOR DE PRUEBA  //Aï¿½ADIDO POR MANOLO
 */
 
 char RTX_Data[MAX_PACKET_SIZE]; // to/from graphics
@@ -150,9 +134,9 @@ static sockaddr_in SND_Dest;        /* Does this have to be global?? */
 static sockaddr_in SCR_Dest;
 static sockaddr_in SCR_Dest1; 
 
-static sockaddr_in SENDERR_Dest;    //AÑADIDO POR MANOLO
-static sockaddr_in SENDERR_Dest2;    //AÑADIDO POR MANOLO_12_04
-static sockaddr_in SENDERR_Dest3;    //AÑADIDO POR MANOLO_12_04
+static sockaddr_in SENDERR_Dest;    //Aï¿½ADIDO POR MANOLO
+static sockaddr_in SENDERR_Dest2;    //Aï¿½ADIDO POR MANOLO_12_04
+static sockaddr_in SENDERR_Dest3;    //Aï¿½ADIDO POR MANOLO_12_04
 
 //static sockaddr_in SENDERR_Visual;    //FLIGHTGEAR_14_08_19 
 
@@ -168,11 +152,11 @@ static int VIS_Socket_desc;  // Connection socket descriptor for Visuals
 static int SND_Socket_desc;  // Connection socket descriptor for sound
 static int SCR_Socket_desc; // Connection socket descriptor for hardware
 static int SCR_Socket_desc1; // Connection socket descriptor for hardware
-static int SENDER_Socket_desc;  //AÑADIDO POR MANOLO
-static int SENDER_Socket_desc2;  //AÑADIDO POR MANOLO_12_04
-static int SENDER_Socket_desc3;  //AÑADIDO POR MANOLO_12_04
+static int SENDER_Socket_desc;  //Aï¿½ADIDO POR MANOLO
+static int SENDER_Socket_desc2;  //Aï¿½ADIDO POR MANOLO_12_04
+static int SENDER_Socket_desc3;  //Aï¿½ADIDO POR MANOLO_12_04
 
-//static int SENDER_Socket_descVis;  //AÑADIDO POR MANOLO_12_04 //FLIGHTGEAR_14_08_19 
+//static int SENDER_Socket_descVis;  //Aï¿½ADIDO POR MANOLO_12_04 //FLIGHTGEAR_14_08_19 
 
 
 /*--------------------*/
@@ -321,57 +305,6 @@ int ET_init_visual()
 	return 1;
 }
 /*----------------------------------------------------------------------*/
-/*----------------------------SEGUNDO VISUAL 14_08------------------------------------------*/
-
-
-/********* PARA FLIGHT GEAR 
-
-int ET_init_SENDERvisual()
-{
-	int  ret;
-	char ptr = 0;
-
-	unsigned long  non_blocking = 1l;
-
-	host_ptr = gethostbyname(SE_config.Xname);
-	//host_ptr = gethostbyname(SE_config.Xname);
-
-	SENDER_Socket_descVis = socket(PF_INET, SOCK_DGRAM, 0);
-
-	if (setsockopt(SENDER_Socket_descVis, SOL_SOCKET, SO_BROADCAST, &ptr, sizeof(int)) == -1)
-	{
-		printf("setsockopt error");
-	}
-
-	SENDERR_Visual.sin_family = PF_INET;
-	SENDERR_Visual.sin_port = htons( (int)49009 ); //49000
-	bcopy(host_ptr->h_addr, &SENDERR_Visual.sin_addr, host_ptr->h_length);
-
-	
-
-	if (connect(SENDER_Socket_descVis, (struct sockaddr *) &SENDERR_Visual, sizeof(SENDERR_Visual)) == -1)
-	{
-		printf("connect error");
-	}
-
-
-	ret = ioctlsocket(SENDER_Socket_descVis, FIONBIO, &non_blocking);
-
-	if (ret == -1)
-	{
-		printf("ioctl error");
-	}
-
-	FD_ZERO(&Fdset);
-	Timeout.tv_sec = 0;
-	Timeout.tv_usec = 0;  // select timeout values
-
-	return 1;
-}
-
-/********* PARA FLIGHT GEAR */
-
-
 
 /*--------------------------------------SEGUNDO VISUAL 14_08--------------------------------*/
 
@@ -1017,7 +950,7 @@ void ET_ex_screens_data1()
 /*Creacion de un nuevo socket para flujo de datos de las pantallas.
  Se exporta la misma estructura que se envia al programa Screens*/
 
-int ET_init_SIMULINKscr()  //AÑADIDO POR MANOLO_12_04
+int ET_init_SIMULINKscr()  //Aï¿½ADIDO POR MANOLO_12_04
 {
 	int  ret;
 	char ptr = 0;
@@ -1062,7 +995,7 @@ int ET_init_SIMULINKscr()  //AÑADIDO POR MANOLO_12_04
 /*----------------------------------------------------------------------*/
 
 
-void ET_ex_SIMULINKscr()  //AÑADIDO POR MANOLO_12_04
+void ET_ex_SIMULINKscr()  //Aï¿½ADIDO POR MANOLO_12_04
 {
 	int bytes_sent;
 
@@ -1083,7 +1016,7 @@ void ET_ex_SIMULINKscr()  //AÑADIDO POR MANOLO_12_04
 /*Creacion de un nuevo socket para flujo de datos desde HARDWARE A DYNAMICS.
  Se exporta la misma estructura que se envia al programa Screens*/
 
-int ET_init_SIMULINKhdw()  //AÑADIDO POR MANOLO_12_04
+int ET_init_SIMULINKhdw()  //Aï¿½ADIDO POR MANOLO_12_04
 {
 	int  ret;
 	char ptr = 0;
@@ -1110,7 +1043,6 @@ int ET_init_SIMULINKhdw()  //AÑADIDO POR MANOLO_12_04
 		return 0;
 	}
 
-
 	ret = ioctlsocket(SENDER_Socket_desc3, FIONBIO, &non_blocking);
 
 	if (ret == -1)
@@ -1128,121 +1060,17 @@ int ET_init_SIMULINKhdw()  //AÑADIDO POR MANOLO_12_04
 /*----------------------------------------------------------------------*/
 
 
-void ET_ex_SIMULINKhdw()  //AÑADIDO POR MANOLO_12_04
+void ET_ex_SIMULINKhdw()  //Ahora envia a Plugin XPython
 {
 	int bytes_sent;
 
    /*bytes_sent = send(SENDER_Socket_desc, (const char *) &sendtest,sizeof(sendtest), 0);*/
    /*sendtest = sendtest + 1;*/  // Contador para pruebas
 
-   bytes_sent = send(SENDER_Socket_desc3, (const char *) &simulinkdoubledata,sizeof(SIMULINKdouble), 0);
+   bytes_sent = send(SENDER_Socket_desc3, (const char *) &XPython,sizeof(XPythonPlugin), 0);
 
 }
 
-
-/*
-int ET_init_SIMULINKoutputs()  //AÑADIDO POR MANOLO
-{
-	int  ret;
-	char ptr = 0;
-
-	unsigned long  non_blocking = 1l;
-
-	host_ptr = gethostbyname("192.128.134.189");
-
-	SENDER_Socket_desc = socket(PF_INET, SOCK_DGRAM, 0);
-
-	if (setsockopt(SENDER_Socket_desc, SOL_SOCKET, SO_BROADCAST, &ptr, sizeof(int)) == -1)
-	{
-		printf("setsockopt error");
-		return 0;
-	}
-
-	SENDERR_Dest.sin_family = PF_INET;
-	SENDERR_Dest.sin_port = htons( (int)19750);
-	//SENDERR_Dest.sin_port = htons( (int)19500);
-	bcopy(host_ptr->h_addr, &SENDERR_Dest.sin_addr, host_ptr->h_length);
-
-	if (connect(SENDER_Socket_desc, (struct sockaddr *) &SENDERR_Dest, sizeof(SENDERR_Dest)) == -1)
-	{
-		printf("connect error");
-		return 0;
-	}
-
-
-	ret = ioctlsocket(SENDER_Socket_desc, FIONBIO, &non_blocking);
-
-	if (ret == -1)
-	{
-		printf("ioctl error");
-		return 0;
-	}
- 
-	FD_ZERO(&Fdset);
-	Timeout.tv_sec = 0;
-	Timeout.tv_usec = 0;  
-
-
-
-	return 1;
-}
-*/
-/*----------------------------------------------------------------------*/
-
-/*
-void ET_ex_SIMULINKoutputs()  //AÑADIDO POR MANOLO
-{
-	//int bytes_REC;
-	int        rec;
-	OUTPUTin *POINTERinbox;
-
-	rec = FALSE;
-
-   /*bytes_sent = send(SENDER_Socket_desc, (const char *) &sendtest,sizeof(sendtest), 0);*/
-   /*sendtest = sendtest + 1;*/  // Contador para pruebas
-
-   //bytes_REC = send(SENDER_Socket_desc, (const char *) &outputs,sizeof(outputs), 0);
-   //bytes_REC = recv(SENDER_Socket_desc,(char *) &BUFFERinbox,sizeof(OUTPUTin), 0);
-
-   //POINTERinbox = (OUTPUTin*) &BUFFERinbox;
-   //memcpy(OUTPUTinbox,&BUFFERinbox,sizeof(OUTPUTin));
-
-      /*while(( recv(H_W_Socket_desc,(char *) &recv_sen_in,sizeof(sen_in_struct), 0)) > 0)
-   {
-      memcpy(IO_Sen_in,&recv_sen_in,sizeof(sen_in_struct));
-	  */
-
-	//printf("\naltitud terreno %.2f", &POINTERinbox->a);
-	//printf("\nBytes recibidos %d", &bytes_REC);
-   /*
-	OUTPUTinbox.a = OUTPUTinbox.a + 0.01;
-	OUTPUTinbox.b = OUTPUTinbox.b + 0.01;
-	OUTPUTinbox.c = OUTPUTinbox.c + 0.01;
-
-	*/    /*
-
-   
- 	while((recv(SENDER_Socket_desc,(char *) &BUFFERinbox,MAX_PACKET_SIZE, 0)) > 0)
-   {
-      rec = TRUE;
-   }
-
-
-   if (rec)
-   {
-      POINTERinbox = (OUTPUTin*) &BUFFERinbox;
-      	//printf("\naltitud terreno %.2f", &POINTERinbox->a);
-	printf("\nBytes recibidos");
-   }
-   else
-   {
-	//printf("\nNO RECIBO NADA");
-   }
-
-	
-}
-
-          */
 /******************TEST DE RECEPTOR UDP********************/ 
 
 int ET_init_SIMULINKoutputs()
@@ -1295,18 +1123,6 @@ int ET_ex_SIMULINKoutputs()
 		{
 
          no_rec_time = 0.0;
-
-		//OUTPUTinbox->a = POINTERinbox->a;
-		//OUTPUTinbox->b = POINTERinbox->b;
-		//OUTPUTinbox->c = POINTERinbox->c;
-
-		////printf("\nPrimer dato %.3f", POINTERinbox->a);
-		////printf("\nSegundo dato %.3f", POINTERinbox->b);
-		////printf("\nTercer dato %.3f", POINTERinbox->c);
-
-		//printf("\nPrimer dato %.3f", OUTPUTinbox->a);
-		//printf("\nSegundo dato %.3f", OUTPUTinbox->b);
-		//printf("\nTercer dato %.3f", OUTPUTinbox->c);
 
 		}
 	  }

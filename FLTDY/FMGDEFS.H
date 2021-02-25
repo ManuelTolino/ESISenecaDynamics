@@ -203,6 +203,16 @@ typedef struct {
 } SIMULINKdouble; //SIMULINK
 
 typedef struct {
+	double latitude;
+	double longitude;
+	double elev;
+	float phi;
+	float theta;
+	float psi;
+} XPythonPlugin; //SIMULINK
+
+
+typedef struct {
     char header[5];
 	int p;
 	double latitude;
@@ -221,5 +231,5 @@ typedef struct {
 	float b[3];
 	float preload[3];
 } GEAR;
-         //==========================ESTRUCTURA DE PRUEBA  //AÑADIDO POR MANOLO
+         //==========================ESTRUCTURA DE PRUEBA  //Aï¿½ADIDO POR MANOLO
 
